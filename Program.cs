@@ -1,7 +1,8 @@
 using backend.Data;
 using backend.Services.Treinadores;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Common;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Pokemon API",
+        Version = "v1",
+        Description = "API para gerenciamento de treinadores e Pokémon.",
+        Contact = new OpenApiContact
+        {
+            Name = "Gabriel Santos",
+            Email = "devgtrue@gmail.com@example.com",
+            Url = new Uri("https://github.com/bieltrue95") 
+        }
+    });
+
+
+});
+
 builder.Services.AddScoped<ITreinadoresInterface, TreinadoresService>();
 
 builder.Services.AddDbContext<PokemonAPIDbContext>(options =>
@@ -24,9 +42,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Pokemon API v1");
+    });
 }
-
 
 app.UseHttpsRedirection();
 
