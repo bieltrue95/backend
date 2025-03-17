@@ -1,6 +1,7 @@
 ﻿using backend.Domain.Pokemons.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
@@ -24,6 +25,7 @@ namespace backend.Models
         public int Nivel { get; set; }
 
         [ForeignKey("TreinadorId")]
+        [JsonIgnore]
         public TreinadorModel Treinador { get; set; }
 
         public Guid TreinadorId { get; set; }  

@@ -15,8 +15,7 @@ namespace backend.Models
         public string Nome { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DataCadastro { get; set; }
+        public DateTime DataCadastro { get; set; } 
 
         [JsonIgnore]
         public ICollection<PokemonModel> Pokemons { get; set; }
